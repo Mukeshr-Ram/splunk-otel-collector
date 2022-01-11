@@ -4,13 +4,13 @@ dev-image:
 
 .PHONY: run-dev-image
 run-dev-image:
-	docker exec -it splunk-otel-collector-salt-dev 2>/dev/null || \
+	docker exec -it splunk-otel-collector-salt-dev bash 2>/dev/null || \
 	docker run \
-		--rm \
 		--name splunk-otel-collector-salt-dev \
-		-it \
-		splunk-otel-collector-salt-dev \
-		bash
+		-d \
+		--privileged \
+		-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+		splunk-otel-collector-salt-dev
 
 .PHONY: test
 test:
